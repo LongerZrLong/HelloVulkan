@@ -16,3 +16,28 @@ target_link_libraries(${PROJECT_NAME} glm::glm)
 # Vulkan
 find_package(Vulkan REQUIRED)
 target_link_libraries(${PROJECT_NAME} Vulkan::Vulkan)
+
+
+set(SHADER_SOURCE_DIR ${PROJECT_SOURCE_DIR}/Shaders)
+set(SHADER_BINARY_DIR ${PROJECT_BINARY_DIR}/Shaders)
+
+file(MAKE_DIRECTORY ${SHADER_BINARY_DIR})
+
+file(GLOB SHADERS
+        ${SHADER_SOURCE_DIR}/*.vert
+        ${SHADER_SOURCE_DIR}/*.frag
+        )
+
+foreach(source IN LISTS SHADERS)
+    get_filename_component(filename ${source} NAME)
+    add_custom_command(
+            COMMAND glslc -o ${SHADER_BINARY_DIR}/${filename}.spv ${source}
+            OUTPUT ${SHADER_BINARY_DIR}/${filename}.spv
+            DEPENDS ${source} ${SHADER_SOURCE_DIR}
+    )
+    list(APPEND SPV_SHADERS ${SHADER_BINARY_DIR}/${filename}.spv)
+endforeach()
+
+add_custom_target(shaders DEPENDS ${SPV_SHADERS})
+
+add_dependencies(${PROJECT_NAME} shaders)
