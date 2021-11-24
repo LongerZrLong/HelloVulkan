@@ -17,7 +17,13 @@ target_link_libraries(${PROJECT_NAME} glm::glm)
 find_package(Vulkan REQUIRED)
 target_link_libraries(${PROJECT_NAME} Vulkan::Vulkan)
 
+# stb_image
+add_subdirectory(External/stb_image)
+target_link_libraries(${PROJECT_NAME} stb_image)
 
+# ============================================ Assets ============================================
+
+# Compiled shaders and move the outputs to destination directories
 set(SHADER_SOURCE_DIR ${PROJECT_SOURCE_DIR}/Shaders)
 set(SHADER_BINARY_DIR ${PROJECT_BINARY_DIR}/Shaders)
 
@@ -41,3 +47,9 @@ endforeach()
 add_custom_target(shaders DEPENDS ${SPV_SHADERS})
 
 add_dependencies(${PROJECT_NAME} shaders)
+
+# Copy textures to destination directories
+set(TEXTURE_SOURCE_DIR ${PROJECT_SOURCE_DIR}/Textures)
+set(TEXTURE_DST_PARENT_DIR ${PROJECT_BINARY_DIR})
+
+file(COPY ${TEXTURE_SOURCE_DIR} DESTINATION ${TEXTURE_DST_PARENT_DIR})
