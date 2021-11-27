@@ -21,6 +21,11 @@ target_link_libraries(${PROJECT_NAME} Vulkan::Vulkan)
 add_subdirectory(External/stb_image)
 target_link_libraries(${PROJECT_NAME} stb_image)
 
+# tiny_obj_loader
+add_subdirectory(External/tiny_obj_loader)
+target_link_libraries(${PROJECT_NAME} tiny_obj_loader)
+
+
 # ============================================ Assets ============================================
 
 # Compiled shaders and move the outputs to destination directories
@@ -53,3 +58,9 @@ set(TEXTURE_SOURCE_DIR ${PROJECT_SOURCE_DIR}/Textures)
 set(TEXTURE_DST_PARENT_DIR ${PROJECT_BINARY_DIR})
 
 file(COPY ${TEXTURE_SOURCE_DIR} DESTINATION ${TEXTURE_DST_PARENT_DIR})
+
+# Copy models to destination directories
+set(MODEL_SOURCE_DIR ${PROJECT_SOURCE_DIR}/Models)
+set(MODEL_DST_PARENT_DIR ${PROJECT_BINARY_DIR})
+
+file(COPY ${MODEL_SOURCE_DIR} DESTINATION ${MODEL_DST_PARENT_DIR})
