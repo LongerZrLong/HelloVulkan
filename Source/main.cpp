@@ -133,7 +133,7 @@ struct UniformBufferObject {
 };
 
 
-class HelloTriangleApplication {
+class HelloVulkanApplication {
 public:
     void run() {
         initWindow();
@@ -220,7 +220,7 @@ private:
     }
 
     static void framebufferResizeCallback(GLFWwindow* window, int width, int height) {
-        auto app = reinterpret_cast<HelloTriangleApplication*>(glfwGetWindowUserPointer(window));
+        auto app = reinterpret_cast<HelloVulkanApplication*>(glfwGetWindowUserPointer(window));
         app->framebufferResized = true;
     }
 
@@ -1807,7 +1807,7 @@ private:
 };
 
 int main() {
-    HelloTriangleApplication app;
+    HelloVulkanApplication app;
 
     try {
         app.run();
